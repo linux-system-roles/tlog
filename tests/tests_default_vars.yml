@@ -2,11 +2,9 @@
 - name: Ensure that the role declares all parameters in defaults
   hosts: all
 
+  roles:
+    - tlog
   tasks:
-    - block:
-        - import_role:
-            name: tlog
-            when: false
     - assert:
         that: "vars[item] is defined"
       loop:
