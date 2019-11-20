@@ -1,0 +1,11 @@
+---
+__tlog_packages:
+  - tlog
+  - sssd
+__tlog_sssd_scopes:
+  all: "all"
+  some: "some"
+  none: "none"
+__tlog_writer:
+  rsyslog: "syslog"
+  journal: "journal"

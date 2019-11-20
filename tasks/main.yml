@@ -1,0 +1,39 @@
+---
+- name: install recording packages
+  package:
+    name: "{{ __tlog_packages }}"
+
+- name: get the rpm package facts
+  package_facts:
+    manager: "auto"
+
+- name: configure basic sssd
+  template:
+    src: 'sssd.conf.j2'
+    dest: /etc/sssd/sssd.conf
+    owner: root
+    group: root
+    mode: 0600
+    force: no
+  when:
+    - tlog_use_sssd
+    - ansible_facts.packages.sssd[0].version < "2.1"
+  notify: restart sssd
+
+- name: configure sssd session recording config
+  template:
+    src: 'sssd-session-recording.conf.j2'
+    dest: /etc/sssd/conf.d/sssd-session-recording.conf
+    owner: root
+    group: root
+    mode: 0600
+  when: tlog_use_sssd
+  notify: restart sssd
+
+- name: configure tlog rec session
+  template:
+    src: 'tlog-rec-session.conf.j2'
+    dest: /etc/tlog/tlog-rec-session.conf
+    owner: root
+    group: root
+    mode: 0644

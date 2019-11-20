@@ -1,0 +1,17 @@
+---
+- name: Ensure that the role declares all parameters in defaults
+  hosts: all
+
+  tasks:
+    - block:
+        - import_role:
+            name: tlog
+            when: false
+    - assert:
+        that: "vars[item] is defined"
+      loop:
+        - tlog_use_sssd
+        - tlog_scope_sssd
+        - tlog_users_sssd
+        - tlog_groups_sssd
+        - tlog_output
