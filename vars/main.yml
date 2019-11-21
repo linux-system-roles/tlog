@@ -9,4 +9,6 @@ __tlog_sssd_scopes:
 __tlog_writer:
   rsyslog: "syslog"
   journal: "journal"
+__tlog_sssd_conf: "/etc/sssd/sssd.conf"
 __tlog_sssd_session_recording_conf: "/etc/sssd/conf.d/sssd-session-recording.conf"
+__tlog_rec_session_conf: "/etc/tlog/tlog-rec-session.conf"
