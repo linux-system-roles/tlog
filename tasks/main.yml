@@ -9,7 +9,7 @@
 
 - name: configure basic sssd
   template:
-    src: 'sssd.conf.j2'
+    src: 'sssd.conf'
     dest: /etc/sssd/sssd.conf
     owner: root
     group: root
@@ -22,7 +22,7 @@
 
 - name: configure sssd session recording config
   template:
-    src: 'sssd-session-recording.conf.j2'
+    src: 'sssd-session-recording.conf'
     dest: /etc/sssd/conf.d/sssd-session-recording.conf
     owner: root
     group: root
@@ -32,7 +32,7 @@
 
 - name: configure tlog rec session
   template:
-    src: 'tlog-rec-session.conf.j2'
+    src: 'tlog-rec-session.conf'
     dest: /etc/tlog/tlog-rec-session.conf
     owner: root
     group: root
