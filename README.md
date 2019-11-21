@@ -2,6 +2,7 @@ tlog
 =========
 
 This role configures a system for [Terminal session recording](https://github.com/scribery).
+The role will configure tlog to log recording data to the systemd journal.
 
 Requirements
 ------------
@@ -26,10 +27,6 @@ Comma-separated list of users to be recorded ( e.g. recordeduser, testuser1 ):
 Comma-separated list of groups to be recorded ( e.g. recordedgroup, wheel, ):
 
 - `tlog_groups_sssd` (default: `""`)
-
-Log writer type(output destination) of tlog-rec-session. Possible values are: `rsyslog` , `journal`:
-
-- `tlog_output` (default: `journal`)
 
 
 Dependencies
