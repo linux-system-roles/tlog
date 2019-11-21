@@ -13,7 +13,7 @@ Role Variables
 
 Configure session recording with SSSD, the preferred way of managing recorded users or groups:
 
-- `tlog_use_sssd` (default: `True`)
+- `tlog_use_sssd` (default: `Yes`)
 
 Configure SSSD recording scope - `all` / `some` / `none`:
 
@@ -52,7 +52,7 @@ Example Playbook
 ~~~
 Testing
 -------
-Testing is done using native Linux System roles test framework
+Testing is done with plays in the tests/ subdirectory.
 
 License
 -------
