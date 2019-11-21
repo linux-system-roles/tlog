@@ -1,0 +1,37 @@
+---
+- name: Run tlog-SSSD configuration tests
+  hosts: all
+
+  tasks:
+    - name: Run role with default sssd settings
+      import_role:
+        name: tlog
+      vars:
+        tlog_scope_sssd: none
+        tlog_users_sssd: ""
+        tlog_groups_sssd: ""
+
+    - name: Run sssd tests
+      import_tasks: run_sssd_tests.yml
+
+    - name: Run role with scope all
+      import_role:
+        name: tlog
+      vars:
+        tlog_scope_sssd: all
+        tlog_users_sssd: ""
+        tlog_groups_sssd: ""
+
+    - name: Run sssd tests
+      import_tasks: run_sssd_tests.yml
+
+    - name: Run role with scope all
+      import_role:
+        name: tlog
+      vars:
+        tlog_scope_sssd: some
+        tlog_users_sssd: "mike, john"
+        tlog_groups_sssd: "teachers, students"
+
+    - name: Run sssd tests
+      import_tasks: run_sssd_tests.yml
