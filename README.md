@@ -7,7 +7,7 @@ The role will configure tlog to log recording data to the systemd journal.
 Requirements
 ------------
 
-This role has no required pre-requisites currently.
+This role is only supported on RHEL8/CentOS8 and Fedora distributions.
 
 Role Variables
 --------------
