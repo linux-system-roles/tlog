@@ -20,13 +20,13 @@ Configure SSSD recording scope - `all` / `some` / `none`:
 
 - `tlog_scope_sssd` (default: `none`)
 
-Comma-separated list of users to be recorded ( e.g. recordeduser, testuser1 ):
+YAML list of users to be recorded:
 
-- `tlog_users_sssd` (default: `""`)
+- `tlog_users_sssd` (default: `[]`)
 
-Comma-separated list of groups to be recorded ( e.g. recordedgroup, wheel, ):
+YAML list of groups to be recorded:
 
-- `tlog_groups_sssd` (default: `""`)
+- `tlog_groups_sssd` (default: `[]`)
 
 
 Dependencies
@@ -44,8 +44,10 @@ Example Playbook
   roles:
     - role: tlog
       vars:
-          tlog_scope_sssd: "some"
-          tlog_users_sssd: "recordeduser"
+          tlog_scope_sssd:
+            - some
+          tlog_users_sssd:
+            - recordeduser
 ~~~
 Testing
 -------

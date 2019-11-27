@@ -12,4 +12,3 @@
         - tlog_scope_sssd
         - tlog_users_sssd
         - tlog_groups_sssd
-        - tlog_output

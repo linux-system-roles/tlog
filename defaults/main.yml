@@ -1,6 +1,5 @@
 ---
 tlog_use_sssd: yes
 tlog_scope_sssd: none
-tlog_users_sssd: ""
-tlog_groups_sssd: ""
-tlog_output: journal
+tlog_users_sssd: []
+tlog_groups_sssd: []

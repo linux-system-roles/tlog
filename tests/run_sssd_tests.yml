@@ -15,5 +15,5 @@
 - assert:
     that:
       - __tlog_conf_content.stdout.find('scope={{ tlog_scope_sssd }}')
-      - __tlog_conf_content.stdout.find('users={{ tlog_users_sssd }}')
-      - __tlog_conf_content.stdout.find('groups={{ tlog_groups_sssd }}')
+      - __tlog_conf_content.stdout.find('users={{ tlog_users_sssd|join(', ') }}')
+      - __tlog_conf_content.stdout.find('groups={{ tlog_groups_sssd|join(', ') }}')
