@@ -7,6 +7,12 @@
   package_facts:
     manager: "auto"
 
+- name: install cockpit session recording
+  package:
+    name: "{{ __cockpit_tlog_packages }}"
+  when:
+    - "'cockpit' in ansible_facts.packages"
+
 - name: configure basic sssd
   template:
     src: 'sssd.conf'

@@ -2,6 +2,8 @@
 __tlog_packages:
   - tlog
   - sssd
+__cockpit_tlog_packages:
+  - cockpit-session-recording
 __tlog_sssd_scopes:
   all: "all"
   some: "some"
