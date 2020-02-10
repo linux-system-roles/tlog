@@ -14,7 +14,7 @@ Role Variables
 
 Configure session recording with SSSD, the preferred way of managing recorded users or groups:
 
-- `tlog_use_sssd` (default: `Yes`)
+- `tlog_use_sssd` (default: `yes`)
 
 Configure SSSD recording scope - `all` / `some` / `none`:
 

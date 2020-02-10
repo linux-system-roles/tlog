@@ -2,12 +2,8 @@
 __tlog_packages:
   - tlog
   - sssd
-__cockpit_tlog_packages:
+__tlog_cockpit_packages:
   - cockpit-session-recording
-__tlog_sssd_scopes:
-  all: "all"
-  some: "some"
-  none: "none"
 __tlog_writer: "journal"
 __tlog_sssd_conf: "/etc/sssd/sssd.conf"
 __tlog_sssd_session_recording_conf: "/etc/sssd/conf.d/sssd-session-recording.conf"

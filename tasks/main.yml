@@ -9,7 +9,7 @@
 
 - name: install cockpit session recording
   package:
-    name: "{{ __cockpit_tlog_packages }}"
+    name: "{{ __tlog_cockpit_packages }}"
   when:
     - "'cockpit' in ansible_facts.packages"
 
