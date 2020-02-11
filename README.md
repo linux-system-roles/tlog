@@ -42,12 +42,10 @@ Example Playbook
   become: yes
   hosts: all
   roles:
-    - role: tlog
-      vars:
-          tlog_scope_sssd:
-            - some
-          tlog_users_sssd:
-            - recordeduser
+    - tlog
+  vars:
+      tlog_scope_sssd: some
+      tlog_users_sssd: recordeduser
 ~~~
 Testing
 -------
