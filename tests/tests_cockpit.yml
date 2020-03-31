@@ -28,7 +28,7 @@
     assert:
       that: "'cockpit-session-recording' not in ansible_facts.packages"
 
-  - name: Install cockpit 
+  - name: Install cockpit
     package:
       name: cockpit
       state: latest

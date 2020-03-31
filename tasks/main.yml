@@ -39,7 +39,7 @@
 - name: configure tlog rec session
   template:
     src: 'tlog-rec-session.conf'
-    dest:  "{{ __tlog_rec_session_conf }}"
+    dest: "{{ __tlog_rec_session_conf }}"
     owner: root
     group: root
     mode: 0644

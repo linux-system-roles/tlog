@@ -15,5 +15,7 @@
 - assert:
     that:
       - __tlog_conf_content.stdout.find('scope={{ tlog_scope_sssd }}')
+      # yamllint disable-line rule:line-length
       - __tlog_conf_content.stdout.find('users={{ tlog_users_sssd|join(', ') }}')
+      # yamllint disable-line rule:line-length
       - __tlog_conf_content.stdout.find('groups={{ tlog_groups_sssd|join(', ') }}')

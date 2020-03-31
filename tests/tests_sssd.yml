@@ -27,11 +27,11 @@
       vars:
         tlog_scope_sssd: some
         tlog_users_sssd:
-            - mike
-            - john
+          - mike
+          - john
         tlog_groups_sssd:
-            - teachers
-            - students
+          - teachers
+          - students
 
     - name: Run sssd tests
       import_tasks: run_sssd_tests.yml
