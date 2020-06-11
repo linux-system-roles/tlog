@@ -3,16 +3,19 @@
     path: "{{ __tlog_sssd_session_recording_conf }}"
   register: __tlog_sssd_session_recording_conf_stat
 
-- assert:
+- name: Report error if conf sssd conf file does not exist
+  assert:
     that:
       - __tlog_sssd_session_recording_conf_stat.stat.exists
       - __tlog_sssd_session_recording_conf_stat.stat.mode == "0600"
 
 - name: Get file contents of sssd-session-recording.conf
-  shell: cat {{ __tlog_sssd_session_recording_conf }}
+  command: cat {{ __tlog_sssd_session_recording_conf }}
   register: __tlog_conf_content
+  changed_when: false
 
-- assert:
+- name: Verify that contents of sssd conf are correct
+  assert:
     that:
       - __tlog_conf_content.stdout.find('scope={{ tlog_scope_sssd }}')
       # yamllint disable-line rule:line-length

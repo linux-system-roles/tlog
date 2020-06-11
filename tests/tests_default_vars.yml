@@ -5,7 +5,8 @@
   roles:
     - tlog
   tasks:
-    - assert:
+    - name: check that all variables are defined
+      assert:
         that: "vars[item] is defined"
       loop:
         - tlog_use_sssd
