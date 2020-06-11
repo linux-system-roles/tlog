@@ -31,7 +31,7 @@
   - name: Install cockpit
     package:
       name: cockpit
-      state: latest
+      state: present
 
   - name: Test role without cockpit
     import_role:
