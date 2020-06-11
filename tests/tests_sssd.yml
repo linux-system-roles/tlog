@@ -5,25 +5,23 @@
   tasks:
     - name: Run role with default sssd settings
       import_role:
-        name: tlog
-      vars:
-        tlog_scope_sssd: none
+        name: linux-system-roles.tlog
 
     - name: Run sssd tests
       import_tasks: run_sssd_tests.yml
 
-    - name: Run role with scope all
+    - name: Run role with tlog_scope_sssd all
       import_role:
-        name: tlog
+        name: linux-system-roles.tlog
       vars:
         tlog_scope_sssd: all
 
     - name: Run sssd tests
       import_tasks: run_sssd_tests.yml
 
-    - name: Run role with scope all
+    - name: Run role with tlog_scope_sssd some
       import_role:
-        name: tlog
+        name: linux-system-roles.tlog
       vars:
         tlog_scope_sssd: some
         tlog_users_sssd:

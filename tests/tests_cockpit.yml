@@ -5,7 +5,7 @@
   tasks:
   - name: get the rpm package facts
     package_facts:
-      manager: "auto"
+      manager: auto
 
   - name: Record cockpit installation status
     set_fact:
@@ -18,11 +18,11 @@
 
   - name: Test role without cockpit
     import_role:
-      name: tlog
+      name: linux-system-roles.tlog
 
   - name: get the rpm package facts without cockpit installed
     package_facts:
-      manager: "auto"
+      manager: auto
 
   - name: Check that cockpit-session-recording is not installed
     assert:
@@ -33,13 +33,13 @@
       name: cockpit
       state: present
 
-  - name: Test role without cockpit
+  - name: Test role with cockpit
     import_role:
-      name: tlog
+      name: linux-system-roles.tlog
 
   - name: get the rpm package facts with cockpit installed
     package_facts:
-      manager: "auto"
+      manager: auto
 
   - name: Check that cockpit-session-recording is installed
     assert:
