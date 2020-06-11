@@ -1,5 +1,5 @@
 tlog
-=========
+====
 
 This role configures a system for [Terminal session recording](https://github.com/scribery).
 The role will configure tlog to log recording data to the systemd journal.
@@ -28,7 +28,6 @@ YAML list of groups to be recorded:
 
 - `tlog_groups_sssd` (default: `[]`)
 
-
 Dependencies
 ------------
 
@@ -36,20 +35,18 @@ This role has no dependencies currently.
 
 Example Playbook
 ----------------
-~~~
----
-- name: SR
-  become: yes
+```yaml
+- name: Deploy session recording
   hosts: all
   roles:
-    - tlog
+    - linux-system-roles.tlog
   vars:
-      tlog_scope_sssd: some
-      tlog_users_sssd: recordeduser
-~~~
+    tlog_scope_sssd: some
+    tlog_users_sssd: recordeduser
+```
 Testing
 -------
-Testing is done with plays in the tests/ subdirectory.
+Testing is done with the `tests/tests*.yml` playbooks.
 
 License
 -------
