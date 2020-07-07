@@ -42,7 +42,8 @@ Example Playbook
     - linux-system-roles.tlog
   vars:
     tlog_scope_sssd: some
-    tlog_users_sssd: recordeduser
+    tlog_users_sssd:
+      - recordeduser
 ```
 Testing
 -------
