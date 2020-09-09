@@ -28,6 +28,16 @@ YAML list of groups to be recorded:
 
 - `tlog_groups_sssd` (default: `[]`)
 
+YAML list of users to be excluded from recording (only applicable when
+scope=all):
+
+- `tlog_exclude_users_sssd` (default: `[]`)
+
+YAML list of groups to be excluded from recording (only applicable when
+scope=all):
+
+- `tlog_exclude_groups_sssd` (default: `[]`)
+
 Dependencies
 ------------
 
