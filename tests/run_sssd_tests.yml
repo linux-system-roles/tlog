@@ -22,3 +22,7 @@
       - __tlog_conf_content.stdout.find('users={{ tlog_users_sssd|join(', ') }}')
       # yamllint disable-line rule:line-length
       - __tlog_conf_content.stdout.find('groups={{ tlog_groups_sssd|join(', ') }}')
+      # yamllint disable-line rule:line-length
+      - __tlog_conf_content.stdout.find('exclude_users={{ tlog_exclude_users_sssd|join(', ') }}')
+      # yamllint disable-line rule:line-length
+      - __tlog_conf_content.stdout.find('exclude_groups={{ tlog_exclude_groups_sssd|join(', ') }}')

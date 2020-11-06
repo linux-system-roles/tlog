@@ -33,3 +33,17 @@
 
     - name: Run sssd tests
       import_tasks: run_sssd_tests.yml
+
+    - name: Run role with excluded users and groups
+      import_role:
+        name: linux-system-roles.tlog
+      vars:
+        tlog_scope_sssd: all
+        tlog_exclude_users_sssd:
+          - jeff
+          - james
+        tlog_exclude_groups_sssd:
+          - admins
+
+    - name: Run sssd tests
+      import_tasks: run_sssd_tests.yml
