@@ -1,5 +1,6 @@
 tlog
 ====
+![CI Testing](https://github.com/linux-system-roles/tlog/workflows/tox/badge.svg)
 
 This role configures a system for [Terminal session recording](https://github.com/scribery).
 The role will configure tlog to log recording data to the systemd journal.
