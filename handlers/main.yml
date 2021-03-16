@@ -3,3 +3,12 @@
   service:
     name: sssd
     state: restarted
+  ignore_errors: true
+
+- name: grab errors1
+  command: systemctl status sssd.service
+  ignore_errors: true
+
+- name: grab errors2
+  command: journalctl -u sssd.service
+  ignore_errors: true
