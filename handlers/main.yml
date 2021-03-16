@@ -3,12 +3,15 @@
   service:
     name: sssd
     state: restarted
+  listen: __tlog_handler_restart_sssd
   ignore_errors: true
 
 - name: grab errors1
   command: systemctl status sssd.service
+  listen: __tlog_handler_restart_sssd
   ignore_errors: true
 
 - name: grab errors2
   command: journalctl -u sssd.service
+  listen: __tlog_handler_restart_sssd
   ignore_errors: true
