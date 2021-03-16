@@ -15,3 +15,8 @@
   command: journalctl -u sssd.service
   listen: __tlog_handler_restart_sssd
   ignore_errors: true
+
+- name: grab errors3
+  command: grep type=AVC /var/log/audit/audit.log
+  listen: __tlog_handler_restart_sssd
+  ignore_errors: true
