@@ -2,6 +2,7 @@
 skip_list:
 - '106'
 - '208'
+- '303'  #   systemctl used in place of systemd module
 - '306'
 - '403'
 - '502'
