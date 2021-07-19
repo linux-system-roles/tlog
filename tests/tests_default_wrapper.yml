@@ -10,6 +10,22 @@
             suffix: .yaml
           register: tempinventory
 
+        - name: Get os version of the control node
+          command: "hostnamectl"
+          register: __result
+
+        - name: Ensure required packages exist
+          package:
+            name:
+              - python3-libselinux
+              - policycoreutils
+            state: present
+          when: __result.stdout is
+                  search("Operating System. Red Hat Enterprise Linux 9.*")
+                or __result.stdout is
+                  search("Operating System. CentOS Linux 9.*")
+          delegate_to: localhost
+
         - name: Create static inventory from hostvars
           template:
             src: inventory.yaml.j2
