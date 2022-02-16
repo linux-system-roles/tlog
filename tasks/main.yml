@@ -1,4 +1,19 @@
 ---
+- name: Set platform/version specific variables
+  include_vars: "{{ __tlog_vars_file }}"
+  loop:
+    - "{{ ansible_facts['os_family'] }}.yml"
+    - "{{ ansible_facts['distribution'] }}.yml"
+    - >-
+      {{ ansible_facts['distribution'] ~ '_' ~
+      ansible_facts['distribution_major_version'] }}.yml
+    - >-
+      {{ ansible_facts['distribution'] ~ '_' ~
+      ansible_facts['distribution_version'] }}.yml
+  vars:
+    __tlog_vars_file: "{{ role_path }}/vars/{{ item }}"
+  when: __tlog_vars_file is file
+
 - name: install session recording packages
   package:
     name: "{{ __tlog_packages }}"
@@ -14,16 +29,25 @@
     - "'cockpit' in ansible_facts.packages"
 
 - name: configure basic sssd
-  template:
-    src: sssd.conf
-    dest: "{{ __tlog_sssd_conf }}"
+  ini_file:
+    path: "{{ __tlog_sssd_conf }}"
+    section: sssd
+    option: "{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
+    create: true
     owner: root
     group: root
     mode: 0600
-    force: no
+  loop:
+    - key: enable_files_domain
+      value: "true"
+    - key: services
+      value: nss
   when:
     - tlog_use_sssd | bool
     - "'sssd' in ansible_facts.packages"
+    - __tlog_enable_sssd_files | bool
   notify: tlog_handler restart sssd
 
 - name: configure sssd session recording config
