@@ -10,3 +10,5 @@ __tlog_sssd_conf: /etc/sssd/sssd.conf
 __tlog_sssd_session_recording_conf: >-
   /etc/sssd/conf.d/sssd-session-recording.conf
 __tlog_rec_session_conf: /etc/tlog/tlog-rec-session.conf
+# by default, do not enable files domain in sssd.conf
+__tlog_enable_sssd_files: false
