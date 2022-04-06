@@ -2,6 +2,7 @@
 __tlog_packages:
   - tlog
   - sssd
+  - authselect
 __tlog_cockpit_packages:
   - cockpit-session-recording
 __tlog_writer: journal

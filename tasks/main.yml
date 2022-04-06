@@ -60,6 +60,25 @@
   when: tlog_use_sssd
   notify: tlog_handler restart sssd
 
+- name: Check with-files-domain feature exists
+  command: authselect list-features sssd
+  register: __tlog_authselect_features
+  changed_when: false
+
+- name: Check if files domain is currently enabled
+  command: authselect current
+  register: __tlog_authselect_current
+  changed_when: false
+  failed_when: __tlog_authselect_current.rc not in [0, 2]
+
+- name: update nsswitch
+  command: authselect select sssd with-files-domain --force
+  when:
+    - tlog_use_sssd
+    - '"with-files-domain" in __tlog_authselect_features.stdout'
+    - not "with-files-domain" in __tlog_authselect_current.stdout
+  notify: tlog_handler restart sssd
+
 - name: configure tlog rec session
   template:
     src: tlog-rec-session.conf
