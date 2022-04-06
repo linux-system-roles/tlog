@@ -74,6 +74,7 @@
 - name: update nsswitch
   command: authselect select sssd with-files-domain --force
   when:
+    - not ansible_check_mode
     - tlog_use_sssd
     - '"with-files-domain" in __tlog_authselect_features.stdout'
     - not "with-files-domain" in __tlog_authselect_current.stdout
