@@ -4,3 +4,4 @@
 
   roles:
     - linux-system-roles.tlog
+  gather_facts: false

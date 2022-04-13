@@ -13,3 +13,10 @@ __tlog_sssd_session_recording_conf: >-
 __tlog_rec_session_conf: /etc/tlog/tlog-rec-session.conf
 # by default, do not enable files domain in sssd.conf
 __tlog_enable_sssd_files: false
+
+# ansible_facts required by the role
+__tlog_required_facts:
+  - distribution
+  - distribution_major_version
+  - distribution_version
+  - os_family
