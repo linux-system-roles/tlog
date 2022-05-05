@@ -10,6 +10,14 @@ Requirements
 
 This role is only supported on RHEL8/CentOS8 and Fedora distributions.
 
+This role requires the `ini_file` module from `community.general`.  If you are
+using `ansible-core` you must install that collection.
+```
+ansible-galaxy collection install -vv -r meta/collection-requirements.yml
+```
+If you are using Ansible Engine 2.9, or are using an Ansible bundle which
+includes these collections/modules, you should have to do nothing.
+
 Role Variables
 --------------
 
