@@ -1,4 +1,4 @@
 # SPDX-License-Identifier: MIT
 collections:
-  - community.general
-  - fedora.linux_system_roles
+  - name: community.general
+  - name: fedora.linux_system_roles
