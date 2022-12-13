@@ -35,7 +35,6 @@
   when:
     - tlog_use_sssd | bool
     - "'sssd' in ansible_facts.packages"
-    - __tlog_enable_sssd_files | bool
   notify: tlog_handler restart sssd
 
 - name: configure sssd session recording config
