@@ -1,6 +1,24 @@
 Changelog
 =========
 
+[1.2.10] - 2022-12-13
+--------------------
+
+### New Features
+
+- none
+
+### Bug Fixes
+
+- Unconditionally enable the files provider. (#67)
+
+The implicity files provider is now disabled in RHEL 8.8+, RHEL9+,
+and Fedora.
+
+### Other Changes
+
+- none
+
 [1.2.9] - 2022-07-19
 --------------------
 
