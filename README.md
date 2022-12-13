@@ -21,7 +21,8 @@ includes these collections/modules, you should have to do nothing.
 Role Variables
 --------------
 
-Configure session recording with SSSD, the preferred way of managing recorded users or groups:
+Configure session recording with SSSD, the preferred way of managing recorded users or groups.
+This causes the SSSD files provider to be enabled explicitly.
 
 - `tlog_use_sssd` (default: `yes`)
 
