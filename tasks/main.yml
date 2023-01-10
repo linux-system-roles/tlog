@@ -2,21 +2,20 @@
 - name: Set platform/version specific variables
   include_tasks: set_vars.yml
 
-- name: install session recording packages
+- name: Install session recording packages
   package:
     name: "{{ __tlog_packages }}"
 
-- name: get the rpm package facts
+- name: Get the rpm package facts
   package_facts:
-    manager: auto
 
-- name: install cockpit session recording
+- name: Install cockpit session recording
   package:
     name: "{{ __tlog_cockpit_packages }}"
   when:
     - "'cockpit' in ansible_facts.packages"
 
-- name: configure basic sssd
+- name: Configure basic sssd
   ini_file:
     path: "{{ __tlog_sssd_conf }}"
     section: sssd
@@ -35,9 +34,9 @@
   when:
     - tlog_use_sssd | bool
     - "'sssd' in ansible_facts.packages"
-  notify: tlog_handler restart sssd
+  notify: Handler tlog_handler restart sssd
 
-- name: configure sssd session recording config
+- name: Configure sssd session recording config
   template:
     src: sssd-session-recording.conf
     dest: "{{ __tlog_sssd_session_recording_conf }}"
@@ -45,7 +44,7 @@
     group: root
     mode: 0600
   when: tlog_use_sssd
-  notify: tlog_handler restart sssd
+  notify: Handler tlog_handler restart sssd
 
 - name: Check with-files-domain feature exists
   command: authselect list-features sssd
@@ -58,16 +57,16 @@
   changed_when: false
   failed_when: __tlog_authselect_current.rc not in [0, 2]
 
-- name: update nsswitch
+- name: Update nsswitch
   command: authselect select sssd with-files-domain --force
   when:
     - not ansible_check_mode
     - tlog_use_sssd
     - '"with-files-domain" in __tlog_authselect_features.stdout'
     - not "with-files-domain" in __tlog_authselect_current.stdout
-  notify: tlog_handler restart sssd
+  notify: Handler tlog_handler restart sssd
 
-- name: configure tlog rec session
+- name: Configure tlog rec session
   template:
     src: tlog-rec-session.conf
     dest: "{{ __tlog_rec_session_conf }}"

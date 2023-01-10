@@ -1,5 +1,5 @@
 ---
-- name: tlog_handler restart sssd
+- name: Handler tlog_handler restart sssd
   service:
     name: sssd
     state: restarted

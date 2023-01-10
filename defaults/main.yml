@@ -1,5 +1,5 @@
 ---
-tlog_use_sssd: yes
+tlog_use_sssd: true
 tlog_scope_sssd: none
 tlog_users_sssd: []
 tlog_groups_sssd: []
