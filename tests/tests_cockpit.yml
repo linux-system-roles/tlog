@@ -1,11 +1,9 @@
 ---
 - name: Test support for autoinstall of cockpit-session-recording
   hosts: all
-
   tasks:
-  - name: get the rpm package facts
+  - name: Get the rpm package facts
     package_facts:
-      manager: auto
 
   - name: Record cockpit installation status
     set_fact:
@@ -20,9 +18,8 @@
     import_role:
       name: linux-system-roles.tlog
 
-  - name: get the rpm package facts without cockpit installed
+  - name: Get the rpm package facts without cockpit installed
     package_facts:
-      manager: auto
 
   - name: Check that cockpit-session-recording is not installed
     assert:
@@ -37,9 +34,8 @@
     import_role:
       name: linux-system-roles.tlog
 
-  - name: get the rpm package facts with cockpit installed
+  - name: Get the rpm package facts with cockpit installed
     package_facts:
-      manager: auto
 
   - name: Check that cockpit-session-recording is installed
     assert:

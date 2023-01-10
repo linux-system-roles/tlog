@@ -1,11 +1,10 @@
 ---
 - name: Ensure that the role declares all parameters in defaults
   hosts: all
-
   roles:
     - linux-system-roles.tlog
   tasks:
-    - name: check that all variables are defined
+    - name: Check that all variables are defined
       assert:
         that: "vars[item] is defined"
       loop:

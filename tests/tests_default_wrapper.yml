@@ -1,10 +1,10 @@
 ---
 - name: Run tests_default.yml in check_mode
   hosts: all
-
   tasks:
-    - block:
-        - name: create temporary file
+    - name: Run test
+      block:
+        - name: Create temporary file
           tempfile:
             state: file
             suffix: .yaml
@@ -22,9 +22,10 @@
             ansible-playbook -vvv -i {{ tempinventory.path }}
             --check tests_default.yml
           delegate_to: localhost
+          changed_when: false
 
       always:
-        - name: remove the temporary file
+        - name: Remove the temporary file
           file:
             path: "{{ tempinventory.path }}"
             state: absent
