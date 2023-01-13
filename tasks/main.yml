@@ -15,7 +15,7 @@
   when:
     - "'cockpit' in ansible_facts.packages"
 
-- name: Configure basic sssd
+- name: Configure sssd services section
   ini_file:
     path: "{{ __tlog_sssd_conf }}"
     section: sssd
@@ -27,10 +27,33 @@
     group: root
     mode: 0600
   loop:
-    - key: enable_files_domain
-      value: "true"
     - key: services
-      value: nss
+      value: "nss, pam"
+    - key: domains
+      value: "nssfiles"
+  when:
+    - tlog_use_sssd | bool
+    - "'sssd' in ansible_facts.packages"
+  notify: Handler tlog_handler restart sssd
+
+- name: Configure sssd proxy provider domain
+  ini_file:
+    path: "{{ __tlog_sssd_conf }}"
+    section: domain/nssfiles
+    option: "{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
+    create: true
+    owner: root
+    group: root
+    mode: 0600
+  loop:
+    - key: id_provider
+      value: proxy
+    - key: proxy_lib_name
+      value: files
+    - key: proxy_pam_target
+      value: sssd-shadowutils
   when:
     - tlog_use_sssd | bool
     - "'sssd' in ansible_facts.packages"
