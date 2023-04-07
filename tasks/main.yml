@@ -65,6 +65,7 @@
     - '"with-files-domain" in __tlog_authselect_features.stdout'
     - not "with-files-domain" in __tlog_authselect_current.stdout
   notify: Handler tlog_handler restart sssd
+  changed_when: true
 
 - name: Configure tlog rec session
   template:
