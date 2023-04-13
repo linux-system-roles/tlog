@@ -1,6 +1,13 @@
 Changelog
 =========
 
+[1.2.13] - 2023-04-13
+--------------------
+
+### Other Changes
+
+- ansible-lint - use changed_when for conditional tasks; fix indentation (#83)
+
 [1.2.12] - 2023-04-06
 --------------------
 
