@@ -38,8 +38,9 @@
       import_tasks: run_sssd_tests.yml
 
     - name: Run role with excluded users and groups
-      import_role:
+      include_role:  # instead of import - so we can use public:
         name: linux-system-roles.tlog
+        public: true
       vars:
         tlog_scope_sssd: all
         tlog_exclude_users_sssd:
@@ -50,3 +51,16 @@
 
     - name: Run sssd tests
       import_tasks: run_sssd_tests.yml
+
+    - name: Check for ansible_managed, fingerprint in generated files
+      include_tasks: tasks/check_header.yml
+      vars:
+        __file: "{{ __tlog_sssd_session_recording_conf }}"
+        __fingerprint: "system_role:tlog"
+
+    - name: Check for ansible_managed, fingerprint in generated files
+      include_tasks: tasks/check_header.yml
+      vars:
+        __file: "{{ __tlog_rec_session_conf }}"
+        __fingerprint: "system_role:tlog"
+        __comment_type: c
