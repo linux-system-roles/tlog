@@ -1,28 +1,31 @@
-tlog
-====
+# tlog
+
 ![CI Testing](https://github.com/linux-system-roles/tlog/workflows/tox/badge.svg)
 
-This role configures a system for [Terminal session recording](https://github.com/scribery).
-The role will configure tlog to log recording data to the systemd journal.
+This role configures a system for [Terminal session
+recording](https://github.com/scribery). The role will configure tlog to log
+recording data to the systemd journal.
 
-Requirements
-------------
+## Requirements
 
 This role is only supported on RHEL8/CentOS8 and Fedora distributions.
 
+### Collection requirements
+
 This role requires the `ini_file` module from `community.general`.  If you are
 using `ansible-core` you must install that collection.
+
 ```
 ansible-galaxy collection install -vv -r meta/collection-requirements.yml
 ```
+
 If you are using Ansible Engine 2.9, or are using an Ansible bundle which
 includes these collections/modules, you should have to do nothing.
 
-Role Variables
---------------
+## Role Variables
 
-Configure session recording with SSSD, the preferred way of managing recorded users or groups.
-This causes the SSSD files provider to be enabled explicitly.
+Configure session recording with SSSD, the preferred way of managing recorded
+users or groups. This causes the SSSD files provider to be enabled explicitly.
 
 - `tlog_use_sssd` (default: `true`)
 
@@ -48,13 +51,8 @@ scope=all):
 
 - `tlog_exclude_groups_sssd` (default: `[]`)
 
-Dependencies
-------------
+## Example Playbook
 
-This role has no dependencies currently.
-
-Example Playbook
-----------------
 ```yaml
 - name: Deploy session recording
   hosts: all
@@ -65,17 +63,16 @@ Example Playbook
     tlog_users_sssd:
       - recordeduser
 ```
-Testing
--------
-Testing is done with the `tests/tests*.yml` playbooks.
 
-License
--------
+## Testing
+
+Testing is done with the `tests/tests_*.yml` playbooks.  See `contributing.md`.
+
+## License
 
 GPL v3.0
 
-Author Information
-------------------
+## Author Information
 
 - Nathan Kinder @nkinder
 
