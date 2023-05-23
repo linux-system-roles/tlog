@@ -1,6 +1,18 @@
 Changelog
 =========
 
+[1.2.15] - 2023-05-23
+--------------------
+
+### Bug Fixes
+
+- fix: Switch SSSD files provider to Proxy Provider
+
+### Other Changes
+
+- docs: Consistent contributing.md for all roles - allow role specific contributing.md section
+- docs: remove unused Dependencies section in README
+
 [1.2.14] - 2023-04-27
 --------------------
 
