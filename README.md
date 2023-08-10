@@ -12,10 +12,10 @@ This role is only supported on RHEL8/CentOS8 and Fedora distributions.
 
 ### Collection requirements
 
-This role requires the `ini_file` module from `community.general`.  If you are
+This role requires the `ini_file` module from `community.general`. If you are
 using `ansible-core` you must install that collection.
 
-```
+```bash
 ansible-galaxy collection install -vv -r meta/collection-requirements.yml
 ```
 
