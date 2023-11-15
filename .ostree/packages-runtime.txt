@@ -1,0 +1,4 @@
+authselect
+cockpit-session-recording
+sssd
+tlog

@@ -12,15 +12,13 @@ This role is only supported on RHEL8/CentOS8 and Fedora distributions.
 
 ### Collection requirements
 
-This role requires the `ini_file` module from `community.general`. If you are
-using `ansible-core` you must install that collection.
+This role requires the `ini_file` module from the `community.general`, and uses
+other collections for `rpm-ostree` support.  Use the following command to
+install the collections:
 
 ```bash
 ansible-galaxy collection install -vv -r meta/collection-requirements.yml
 ```
-
-If you are using Ansible Engine 2.9, or are using an Ansible bundle which
-includes these collections/modules, you should have to do nothing.
 
 ## Role Variables
 
@@ -67,6 +65,10 @@ scope=all):
 ## Testing
 
 Testing is done with the `tests/tests_*.yml` playbooks.  See `contributing.md`.
+
+## rpm-ostree
+
+See README-ostree.md
 
 ## License
 

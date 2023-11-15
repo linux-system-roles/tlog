@@ -7,3 +7,6 @@
     tlog_scope_sssd: some
     tlog_users_sssd:
       - recordeduser
+  pre_tasks:
+    - name: Test setup and check for ostree
+      include_tasks: tasks/setup.yml
