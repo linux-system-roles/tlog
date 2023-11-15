@@ -1,7 +1,9 @@
 ---
 - name: Ensure that the role runs with default parameters
   hosts: all
-
   roles:
     - linux-system-roles.tlog
   gather_facts: false
+  pre_tasks:
+    - name: Test setup and check for ostree
+      include_tasks: tasks/setup.yml

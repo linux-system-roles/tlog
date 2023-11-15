@@ -3,6 +3,9 @@
   hosts: all
 
   tasks:
+    - name: Test setup and check for ostree
+      include_tasks: tasks/setup.yml
+
     - name: Run role with default sssd settings
       import_role:
         name: linux-system-roles.tlog

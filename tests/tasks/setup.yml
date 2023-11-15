@@ -1,0 +1,25 @@
+---
+# common test setup tasks
+- name: Check if system is ostree
+  stat:
+    path: "{{ ostree_booted_file }}"
+  register: __ostree_booted_stat
+  vars:
+    ostree_booted_file: /run/ostree-booted
+
+- name: Skip test if not supported on ostree
+  meta: end_host
+  when:
+    - __ostree_booted_stat.stat.exists
+    - __tlog_unsupported_ostree | d(false)
+
+- name: Ensure sssd user/group exist in /etc files
+  shell: |
+    if ! grep -q ^sssd /etc/passwd && grep -q ^sssd /usr/lib/passwd; then
+      grep ^sssd /usr/lib/passwd >> /etc/passwd
+    fi
+    if ! grep -q ^sssd /etc/group && grep -q ^sssd /usr/lib/group; then
+      grep ^sssd /usr/lib/group >> /etc/group
+    fi
+  when: __ostree_booted_stat.stat.exists
+  changed_when: true

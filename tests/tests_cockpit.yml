@@ -2,6 +2,11 @@
 - name: Test support for autoinstall of cockpit-session-recording
   hosts: all
   tasks:
+    - name: Test setup and check for ostree
+      include_tasks: tasks/setup.yml
+      vars:
+        __tlog_unsupported_ostree: true
+
     - name: Get the rpm package facts
       package_facts:
 
