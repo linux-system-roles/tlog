@@ -5,6 +5,8 @@
 - name: Install session recording packages
   package:
     name: "{{ __tlog_packages }}"
+    use: "{{ (__tlog_is_ostree | d(false)) |
+             ternary('ansible.posix.rhel_rpm_ostree', omit) }}"
 
 - name: Get the rpm package facts
   package_facts:
@@ -12,6 +14,8 @@
 - name: Install cockpit session recording
   package:
     name: "{{ __tlog_cockpit_packages }}"
+    use: "{{ (__tlog_is_ostree | d(false)) |
+             ternary('ansible.posix.rhel_rpm_ostree', omit) }}"
   when:
     - "'cockpit' in ansible_facts.packages"
 
