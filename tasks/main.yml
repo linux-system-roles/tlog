@@ -20,7 +20,7 @@
     - "'cockpit' in ansible_facts.packages"
 
 - name: Configure sssd services section
-  ini_file:
+  community.general.ini_file:
     path: "{{ __tlog_sssd_conf }}"
     section: sssd
     option: "{{ item.key }}"
@@ -41,7 +41,7 @@
   notify: Handler tlog_handler restart sssd
 
 - name: Configure sssd proxy provider domain
-  ini_file:
+  community.general.ini_file:
     path: "{{ __tlog_sssd_conf }}"
     section: domain/nssfiles
     option: "{{ item.key }}"

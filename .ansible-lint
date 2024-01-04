@@ -21,6 +21,6 @@ exclude_paths:
   - .markdownlint.yaml
   - examples/roles/
 mock_modules:
-  - ini_file
+  - community.general.ini_file
 mock_roles:
   - linux-system-roles.tlog
