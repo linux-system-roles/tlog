@@ -19,7 +19,13 @@
       vars:
         tlog_scope_sssd: all
 
-    - name: Check sssd files provider setup properly
+    - name: Check sssd authselect with tlog setup properly
+      import_tasks: check_sssd_with_tlog.yml
+
+    - name: Run sssd tests
+      import_tasks: run_sssd_tests.yml
+
+    - name: Check authselect files provider setup properly
       import_tasks: check_sssd_files_provider.yml
 
     - name: Run sssd tests

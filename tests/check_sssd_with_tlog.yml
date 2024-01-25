@@ -1,0 +1,25 @@
+---
+- name: Check with-tlog feature exists
+  command: authselect list-features sssd
+  register: __tlog_authselect_features
+  changed_when: false
+
+- name: Check if with-tlog authselect feature is currently enabled
+  command: authselect current
+  register: __tlog_authselect_current
+  changed_when: false
+  failed_when: __tlog_authselect_current.rc not in [0, 2]
+
+- name: Read nsswitch.conf
+  slurp:
+    src: /etc/nsswitch.conf
+  register: __nsswitch_slurp
+
+- name: Check if with tlog authselect feature enabled and nsswitch set correctly
+  assert:
+    that:
+      - __nsswitch_contents | regex_search('^passwd:\\s+sss', multiline=True)
+      - '"with-tlog" in __tlog_authselect_current.stdout'
+  when: '"with-tlog" in __tlog_authselect_features.stdout'
+  vars:
+    __nsswitch_contents: "{{ __nsswitch_slurp['content'] | b64decode }}"
