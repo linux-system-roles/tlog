@@ -1,6 +1,13 @@
 Changelog
 =========
 
+[1.3.3] - 2024-01-31
+--------------------
+
+### Other Changes
+
+- refactor: Support with-tlog authselect feature (#120)
+
 [1.3.2] - 2024-01-16
 --------------------
 
