@@ -14,12 +14,14 @@ galaxy_info:
         - "8"
         - "9"
   galaxy_tags:
-    - session
-    - recording
-    - tlog
-    - redhat
-    - fedora
     - centos
+    - el8
+    - el9
+    - el10
+    - fedora
+    - recording
+    - redhat
     - rhel
-
+    - session
+    - tlog
 dependencies: []
