@@ -1,6 +1,14 @@
 Changelog
 =========
 
+[1.3.8] - 2025-01-09
+--------------------
+
+### Other Changes
+
+- ci: Use Fedora 41, drop Fedora 39 (#148)
+- ci: Use Fedora 41, drop Fedora 39 - part two (#149)
+
 [1.3.7] - 2024-10-30
 --------------------
 
