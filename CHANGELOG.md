@@ -196,7 +196,7 @@ Changelog
 
 - Unconditionally enable the files provider. (#67)
 
-The implicity files provider is now disabled in RHEL 8.8+, RHEL9+,
+The implicitly files provider is now disabled in RHEL 8.8+, RHEL9+,
 and Fedora.
 
 ### Other Changes
