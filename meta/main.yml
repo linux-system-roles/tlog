@@ -15,6 +15,7 @@ galaxy_info:
         - "9"
   galaxy_tags:
     - centos
+    - containerbuild
     - el8
     - el9
     - el10
