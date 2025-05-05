@@ -1,6 +1,9 @@
 ---
 - name: Run tests_default.yml in check_mode
   hosts: all
+  # no ssh running in a container build env
+  tags:
+    - tests::booted
   tasks:
     - name: Run test
       block:
