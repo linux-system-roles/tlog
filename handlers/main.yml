@@ -3,3 +3,4 @@
   service:
     name: sssd
     state: restarted
+  when: __tlog_is_booted
