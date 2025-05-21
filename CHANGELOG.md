@@ -1,6 +1,33 @@
 Changelog
 =========
 
+[1.4.0] - 2025-05-21
+--------------------
+
+### New Features
+
+- feat: Support this role in container builds (#164)
+
+### Bug Fixes
+
+- fix: Consider "degraded" systemd state as booted (#166)
+
+### Other Changes
+
+- ci: ansible-plugin-scan is disabled for now (#151)
+- ci: bump ansible-lint to v25; provide collection requirements for ansible-lint (#154)
+- ci: Check spelling with codespell (#155)
+- ci: Add test plan that runs CI tests and customize it for each role (#156)
+- ci: In test plans, prefix all relate variables with SR_ (#157)
+- ci: Create inventory for wrapper test with inventory_hostname (#158)
+- ci: Fix bug with ARTIFACTS_URL after prefixing with SR_ (#159)
+- ci: several changes related to new qemu test, ansible-lint, python versions, ubuntu versions (#160)
+- ci: use tox-lsr 3.6.0; improve qemu test logging (#161)
+- ci: skip storage scsi, nvme tests in github qemu ci (#162)
+- ci: Bump sclorg/testing-farm-as-github-action from 3 to 4 (#163)
+- ci: bump tox-lsr to 3.8.0; rename qemu/kvm tests (#165)
+- ci: Add Fedora 42; use tox-lsr 3.9.0; use lsr-report-errors for qemu tests (#167)
+
 [1.3.8] - 2025-01-09
 --------------------
 
