@@ -9,6 +9,14 @@
     - name: Run role with default sssd settings
       import_role:
         name: linux-system-roles.tlog
+      when: not __bootc_validation | d(false)
+
+    - name: Create QEMU deployment during bootc end-to-end test
+      delegate_to: localhost
+      become: false
+      command: "{{ lsr_scriptdir }}/bootc-buildah-qcow.sh {{ ansible_host }}"
+      changed_when: true
+      when: ansible_connection == "buildah"
 
     - name: Run sssd tests
       import_tasks: run_sssd_tests.yml
