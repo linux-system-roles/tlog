@@ -8,7 +8,8 @@
   assert:
     that:
       - __tlog_sssd_session_recording_conf_stat.stat.exists
-      - __tlog_sssd_session_recording_conf_stat.stat.mode == "0600"
+      - __tlog_sssd_session_recording_conf_stat.stat.mode == "0640"
+      - __tlog_sssd_session_recording_conf_stat.stat.gr_name == "sssd"
 
 - name: Get file contents of sssd-session-recording.conf
   command: cat {{ __tlog_sssd_session_recording_conf }}

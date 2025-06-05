@@ -68,8 +68,8 @@
     src: sssd-session-recording.conf
     dest: "{{ __tlog_sssd_session_recording_conf }}"
     owner: root
-    group: root
-    mode: "0600"
+    group: sssd
+    mode: "0640"
   when: tlog_use_sssd
   notify: Handler tlog_handler restart sssd
 
