@@ -18,7 +18,7 @@
 - name: Check if with tlog authselect feature enabled and nsswitch set correctly
   assert:
     that:
-      - __nsswitch_contents | regex_search('^passwd:\\s+sss', multiline=True)
+      - __nsswitch_contents | regex_search('^passwd:\\s+sss', multiline=True) | length > 0
       - '"with-tlog" in __tlog_authselect_current.stdout'
   when: '"with-tlog" in __tlog_authselect_features.stdout'
   vars:
