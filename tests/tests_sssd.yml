@@ -21,27 +21,24 @@
     - name: Run sssd tests
       import_tasks: run_sssd_tests.yml
 
-    - name: Run role with tlog_scope_sssd all
-      import_role:
-        name: linux-system-roles.tlog
+    - name: Test role with tlog_scope_sssd all
       vars:
         tlog_scope_sssd: all
+      block:
+        - name: Run role
+          import_role:
+            name: linux-system-roles.tlog
 
-    - name: Check sssd authselect with tlog setup properly
-      import_tasks: check_sssd_with_tlog.yml
+        - name: Check sssd authselect with tlog setup properly
+          import_tasks: check_sssd_with_tlog.yml
 
-    - name: Run sssd tests
-      import_tasks: run_sssd_tests.yml
+        - name: Run sssd tests
+          import_tasks: run_sssd_tests.yml
 
-    - name: Check authselect files provider setup properly
-      import_tasks: check_sssd_files_provider.yml
+        - name: Check authselect files provider setup properly
+          import_tasks: check_sssd_files_provider.yml
 
-    - name: Run sssd tests
-      import_tasks: run_sssd_tests.yml
-
-    - name: Run role with tlog_scope_sssd some
-      import_role:
-        name: linux-system-roles.tlog
+    - name: Test role with tlog_scope_sssd some
       vars:
         tlog_scope_sssd: some
         tlog_users_sssd:
@@ -50,14 +47,15 @@
         tlog_groups_sssd:
           - teachers
           - students
+      block:
+        - name: Run role
+          import_role:
+            name: linux-system-roles.tlog
 
-    - name: Run sssd tests
-      import_tasks: run_sssd_tests.yml
+        - name: Run sssd tests
+          import_tasks: run_sssd_tests.yml
 
-    - name: Run role with excluded users and groups
-      include_role:  # instead of import - so we can use public:
-        name: linux-system-roles.tlog
-        public: true
+    - name: Test role with excluded users and groups
       vars:
         tlog_scope_sssd: all
         tlog_exclude_users_sssd:
@@ -65,9 +63,13 @@
           - james
         tlog_exclude_groups_sssd:
           - admins
+      block:
+        - name: Run role
+          import_role:
+            name: linux-system-roles.tlog
 
-    - name: Run sssd tests
-      import_tasks: run_sssd_tests.yml
+        - name: Run sssd tests
+          import_tasks: run_sssd_tests.yml
 
     - name: Check for ansible_managed, fingerprint in generated files
       include_tasks: tasks/check_header.yml
