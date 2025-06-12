@@ -19,12 +19,17 @@
 - name: Verify that contents of sssd conf are correct
   assert:
     that:
-      - __tlog_conf_content.stdout.find('scope={{ tlog_scope_sssd }}')
+      - ('scope=' + tlog_scope_sssd) in __tlog_conf_content.stdout
       # yamllint disable-line rule:line-length
-      - __tlog_conf_content.stdout.find('users={{ tlog_users_sssd | join(', ') }}')
+      - ('users=' + tlog_users_sssd_str) in __tlog_conf_content.stdout
       # yamllint disable-line rule:line-length
-      - __tlog_conf_content.stdout.find('groups={{ tlog_groups_sssd | join(', ') }}')
+      - ('groups=' + tlog_groups_sssd_str) in __tlog_conf_content.stdout
       # yamllint disable-line rule:line-length
-      - __tlog_conf_content.stdout.find('exclude_users={{ tlog_exclude_users_sssd | join(', ') }}')
+      - ('exclude_users=' + tlog_exclude_users_sssd_str) in __tlog_conf_content.stdout
       # yamllint disable-line rule:line-length
-      - __tlog_conf_content.stdout.find('exclude_groups={{ tlog_exclude_groups_sssd | join(', ') }}')
+      - ('exclude_groups=' + tlog_exclude_groups_sssd_str) in __tlog_conf_content.stdout
+  vars:
+    tlog_users_sssd_str: "{{ tlog_users_sssd | join(', ') }}"
+    tlog_groups_sssd_str: "{{ tlog_groups_sssd | join(', ') }}"
+    tlog_exclude_users_sssd_str: "{{ tlog_exclude_users_sssd | join(', ') }}"
+    tlog_exclude_groups_sssd_str: "{{ tlog_exclude_groups_sssd | join(', ') }}"
