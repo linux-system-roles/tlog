@@ -1,6 +1,19 @@
 Changelog
 =========
 
+[1.4.1] - 2025-06-16
+--------------------
+
+### Bug Fixes
+
+- fix: Set __is_system_running in check mode (#172)
+
+### Other Changes
+
+- ci: Add support for bootc end-to-end validation tests (#169)
+- tests: bootc end-to-end validation; fix ownership of sssd-session-recording.conf (#170)
+- ci: Use ansible 2.19 for fedora 42 testing; support python 3.13 (#171)
+
 [1.4.0] - 2025-05-21
 --------------------
 
