@@ -1,6 +1,13 @@
 Changelog
 =========
 
+[1.4.2] - 2025-07-09
+--------------------
+
+### Other Changes
+
+- refactor: fix ansible lint unique name issue (#174)
+
 [1.4.1] - 2025-06-16
 --------------------
 
