@@ -77,7 +77,7 @@
         __file: "{{ __tlog_sssd_session_recording_conf }}"
         __fingerprint: "system_role:tlog"
 
-    - name: Check for ansible_managed, fingerprint in generated files
+    - name: Check for ansible_managed, fingerprint in generated files - 2
       include_tasks: tasks/check_header.yml
       vars:
         __file: "{{ __tlog_rec_session_conf }}"
