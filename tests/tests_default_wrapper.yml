@@ -5,6 +5,10 @@
   tags:
     - tests::booted
   tasks:
+    - name: Save connection method
+      set_fact:
+        __ansible_connection: "{{ ansible_connection }}"
+
     - name: Run test
       block:
         - name: Create temporary file
@@ -12,6 +16,7 @@
             state: file
             suffix: .yaml
           register: tempinventory
+          delegate_to: localhost
 
         - name: Create static inventory from hostvars
           template:
