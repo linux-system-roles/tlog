@@ -1,6 +1,13 @@
 Changelog
 =========
 
+[1.4.3] - 2025-08-08
+--------------------
+
+### Other Changes
+
+- test: default wrapper should use local connection if local (#176)
+
 [1.4.2] - 2025-07-09
 --------------------
 
