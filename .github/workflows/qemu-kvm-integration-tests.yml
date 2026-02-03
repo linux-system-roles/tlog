@@ -18,6 +18,7 @@ permissions:
   statuses: write
 jobs:
   scenario:
+    if: "!contains(github.event.pull_request.title, '[citest_skip]')"
     runs-on: ubuntu-latest
 
     strategy:

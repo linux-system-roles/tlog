@@ -15,6 +15,7 @@ permissions:
   contents: read
 jobs:
   test_converting_readme:
+    if: "!contains(github.event.pull_request.title, '[citest_skip]')"
     runs-on: ubuntu-latest
     permissions:
       contents: write
