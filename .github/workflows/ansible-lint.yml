@@ -17,8 +17,12 @@ env:
 permissions:
   contents: read
 jobs:
+  # do not run the pipeline if this is a pull request and the title contains [citest_skip],
+  # or if this is a push and the head commit message contains [citest_skip]
   ansible_lint:
-    if: "!contains(github.event.pull_request.title, '[citest_skip]')"
+    if: |
+      !((github.event_name == 'pull_request' && contains(github.event.pull_request.title, '[citest_skip]')) ||
+        (github.event_name == 'push' && contains(github.event.head_commit.message, '[citest_skip]')))
     runs-on: ubuntu-latest
     steps:
       - name: Update pip, git
