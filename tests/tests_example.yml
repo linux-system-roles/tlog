@@ -1,8 +1,6 @@
 ---
 - name: Ensure that the README example play runs
   hosts: all
-  roles:
-    - linux-system-roles.tlog
   vars:
     tlog_scope_sssd: some
     tlog_users_sssd:
@@ -10,3 +8,6 @@
   pre_tasks:
     - name: Test setup and check for ostree
       include_tasks: tasks/setup.yml
+  tasks:
+    - name: Run the role
+      include_tasks: tasks/run_role_with_clear_facts.yml

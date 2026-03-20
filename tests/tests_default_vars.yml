@@ -1,12 +1,14 @@
 ---
 - name: Ensure that the role declares all parameters in defaults
   hosts: all
-  roles:
-    - linux-system-roles.tlog
   pre_tasks:
     - name: Test setup and check for ostree
       include_tasks: tasks/setup.yml
   tasks:
+    - name: Run the role
+      include_tasks: tasks/run_role_with_clear_facts.yml
+      vars:
+        __sr_public: true
     - name: Check that all variables are defined
       assert:
         that: "vars[item] is defined"
