@@ -20,8 +20,9 @@
         state: absent
 
     - name: Test role without cockpit
-      import_role:
-        name: linux-system-roles.tlog
+      include_tasks: tasks/run_role_with_clear_facts.yml
+      vars:
+        __sr_public: true
 
     - name: Get the rpm package facts without cockpit installed
       package_facts:
@@ -36,8 +37,9 @@
         state: present
 
     - name: Test role with cockpit
-      import_role:
-        name: linux-system-roles.tlog
+      include_tasks: tasks/run_role_with_clear_facts.yml
+      vars:
+        __sr_public: true
 
     - name: Get the rpm package facts with cockpit installed
       package_facts:

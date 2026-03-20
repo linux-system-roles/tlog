@@ -7,9 +7,17 @@
       include_tasks: tasks/setup.yml
 
     - name: Run role with default sssd settings
-      import_role:
-        name: linux-system-roles.tlog
+      include_tasks: tasks/run_role_with_clear_facts.yml
+      vars:
+        __sr_public: true
       when: not __bootc_validation | d(false)
+
+    - name: Run role only to load facts and role private variables for bootc validation
+      include_role:
+        name: linux-system-roles.tlog
+        tasks_from: set_vars.yml
+        public: true
+      when: __bootc_validation | d(false)
 
     - name: Create QEMU deployment during bootc end-to-end test
       delegate_to: localhost
@@ -26,8 +34,9 @@
         tlog_scope_sssd: all
       block:
         - name: Run role
-          import_role:
-            name: linux-system-roles.tlog
+          include_tasks: tasks/run_role_with_clear_facts.yml
+          vars:
+            __sr_public: true
 
         - name: Check sssd authselect with tlog setup properly
           import_tasks: check_sssd_with_tlog.yml
@@ -49,8 +58,9 @@
           - students
       block:
         - name: Run role
-          import_role:
-            name: linux-system-roles.tlog
+          include_tasks: tasks/run_role_with_clear_facts.yml
+          vars:
+            __sr_public: true
 
         - name: Run sssd tests
           import_tasks: run_sssd_tests.yml
@@ -65,8 +75,9 @@
           - admins
       block:
         - name: Run role
-          import_role:
-            name: linux-system-roles.tlog
+          include_tasks: tasks/run_role_with_clear_facts.yml
+          vars:
+            __sr_public: true
 
         - name: Run sssd tests
           import_tasks: run_sssd_tests.yml
