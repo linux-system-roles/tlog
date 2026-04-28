@@ -1,6 +1,30 @@
 Changelog
 =========
 
+[1.5.0] - 2026-04-28
+--------------------
+
+### New Features
+
+- feat: add role fingerprints to syslog (#216)
+
+### Other Changes
+
+- ci: Bump ansible/ansible-lint from 25 to 26 (#199)
+- ci: skip most CI checks if title contains citest skip [citest_skip] (#200)
+- ci: implement citest skip for push events [citest_skip] (#201)
+- ci: skip most CI checks if title contains citest skip [citest_skip] (#202)
+- ci: ansible-lint - remove .collection directory from converted collection [citest_skip] (#203)
+- ci: tox-lsr version 3.15.0 [citest_skip] (#204)
+- ci: Add Fedora 43, remove Fedora 41 from Testing Farm CI (#205)
+- ci: Bump actions/upload-artifact from 6 to 7 (#207)
+- ci: tox-lsr 3.17.0 - container test improvements, use ansible 2.20 for fedora 43 [citest_skip] (#209)
+- ci: tox-lsr 3.17.1 - previous update broke container tests, this fixes them [citest_skip] (#210)
+- ci: fix yum repos to use devel site instead of old site name [citest_skip] (#212)
+- ci: update header for run_role_with_clear_facts [citest_skip] (#213)
+- ci: Comply with Ansible partner certification checking [citest_skip] (#214)
+- ci: ansible-lint requires dependencies to be installed [citest_skip] (#215)
+
 [1.4.5] - 2026-01-13
 --------------------
 
