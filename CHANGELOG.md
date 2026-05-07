@@ -1,6 +1,17 @@
 Changelog
 =========
 
+[1.5.1] - 2026-05-07
+--------------------
+
+### Bug Fixes
+
+- fix: add verbosity-based no_log to facts modules (#219)
+
+### Other Changes
+
+- ci: Bump actions/github-script from 8 to 9 (#218)
+
 [1.5.0] - 2026-04-28
 --------------------
 
