@@ -10,6 +10,7 @@
 
 - name: Get the rpm package facts
   package_facts:
+  no_log: "{{ ansible_verbosity < 2 }}"
 
 - name: Install cockpit session recording
   package:
