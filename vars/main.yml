@@ -25,6 +25,8 @@ __tlog_required_facts:
 __tlog_required_facts_subsets: "{{ ['!all', '!min'] +
   __tlog_required_facts }}"
 
+__tlog_write_log_file: false
+
 # BEGIN - DO NOT EDIT THIS BLOCK - rh distros variables
 # Ansible distribution identifiers that the role treats like RHEL
 __tlog_rh_distros:
