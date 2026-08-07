@@ -31,6 +31,15 @@
             --check tests_default.yml
           delegate_to: localhost
           changed_when: false
+          register: __check_mode_result
+          failed_when: __check_mode_result is failed
+            or __check_mode_result.stdout_lines | select('search', _begin_pattern) | list | length == 0
+            or __check_mode_result.stdout_lines | select('search', _success_pattern) | list | length == 0
+          vars:
+            _begin_pattern: >-
+              Check mode: message not logged - .* role_name=tlog .* status=begin .* ansible_check_mode=[Tt]rue
+            _success_pattern: >-
+              Check mode: message not logged - .* role_name=tlog .* status=success .* ansible_check_mode=[Tt]rue
 
       always:
         - name: Remove the temporary file
