@@ -18,8 +18,14 @@ __tlog_required_facts:
   - distribution_major_version
   - distribution_version
   - os_family
-  # provides ansible_facts.python_version, used to pick the ini_file module
+  # provides ansible_facts.python, used to pick the ini_file module
   - python
+
+# managed node python version as "major.minor" (e.g. "3.6"), used to pick
+# the ini_file module; ansible_facts.python_version is not part of the
+# 'python' gather_subset, so derive it from the ansible_facts.python dict
+__tlog_python_version: "{{ ansible_facts['python']['version']['major'] }}.{{
+  ansible_facts['python']['version']['minor'] }}"
 
 # the subsets of ansible_facts that need to be gathered in case any of the
 # facts in required_facts is missing; see the documentation of
