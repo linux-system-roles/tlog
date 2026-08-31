@@ -46,10 +46,10 @@
     - not (ansible_facts['python_version'] is version('3.7', '>='))
   notify: Handler tlog_handler restart sssd
 
-# Bare module name (not FQCN): on ansible 2.9 an unresolvable FQCN aborts
-# play parsing even for a task skipped by "when". The bare name resolves to
-# the ansible 2.9 builtin and redirects to the latest collection module
-# elsewhere. Used on managed nodes with python >= 3.7.
+# Bare module name (not FQCN): an unresolvable FQCN aborts play parsing on
+# ansible 2.9 even for a task skipped by "when", so the bare name is used.
+# This runs only on managed nodes with python >= 3.7, where the bare name
+# resolves to the latest collection module.
 - name: Configure sssd services section
   ini_file:  # noqa fqcn
     path: "{{ __tlog_sssd_conf }}"
@@ -100,10 +100,10 @@
     - not (ansible_facts['python_version'] is version('3.7', '>='))
   notify: Handler tlog_handler restart sssd
 
-# Bare module name (not FQCN): on ansible 2.9 an unresolvable FQCN aborts
-# play parsing even for a task skipped by "when". The bare name resolves to
-# the ansible 2.9 builtin and redirects to the latest collection module
-# elsewhere. Used on managed nodes with python >= 3.7.
+# Bare module name (not FQCN): an unresolvable FQCN aborts play parsing on
+# ansible 2.9 even for a task skipped by "when", so the bare name is used.
+# This runs only on managed nodes with python >= 3.7, where the bare name
+# resolves to the latest collection module.
 - name: Configure sssd proxy provider domain
   ini_file:  # noqa fqcn
     path: "{{ __tlog_sssd_conf }}"
