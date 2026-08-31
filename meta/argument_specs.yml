@@ -1,0 +1,56 @@
+# SPDX-License-Identifier: MIT
+---
+argument_specs:
+  main:
+    short_description: The tlog role.
+    description: >
+      The tlog role configures a system for terminal session recording
+      using tlog. The role installs the necessary packages, configures
+      SSSD for session recording, and sets up the tlog-rec-session
+      configuration. Recording data is logged to the systemd journal.
+    options:
+      tlog_use_sssd:
+        type: bool
+        default: true
+        description: >
+          Whether to configure session recording with SSSD. When
+          enabled, the SSSD files provider is configured explicitly.
+      tlog_scope_sssd:
+        type: str
+        default: none
+        choices:
+          - all
+          - some
+          - none
+        description: >
+          The SSSD session recording scope. Use `all` to record all
+          sessions, `some` to record only sessions of specified users
+          and groups, or `none` to disable session recording.
+      tlog_users_sssd:
+        type: list
+        elements: str
+        default: []
+        description: >
+          List of users whose sessions should be recorded. Only
+          applicable when `tlog_scope_sssd` is `some`.
+      tlog_groups_sssd:
+        type: list
+        elements: str
+        default: []
+        description: >
+          List of groups whose sessions should be recorded. Only
+          applicable when `tlog_scope_sssd` is `some`.
+      tlog_exclude_users_sssd:
+        type: list
+        elements: str
+        default: []
+        description: >
+          List of users to exclude from session recording. Only
+          applicable when `tlog_scope_sssd` is `all`.
+      tlog_exclude_groups_sssd:
+        type: list
+        elements: str
+        default: []
+        description: >
+          List of groups to exclude from session recording. Only
+          applicable when `tlog_scope_sssd` is `all`.
