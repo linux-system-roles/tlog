@@ -43,7 +43,7 @@
   when:
     - tlog_use_sssd | bool
     - "'sssd' in ansible_facts.packages"
-    - not (ansible_facts['python_version'] is version('3.7', '>='))
+    - not (__tlog_python_version is version('3.7', '>='))
   notify: Handler tlog_handler restart sssd
 
 # Bare module name (not FQCN): on ansible 2.9 an unresolvable FQCN aborts
@@ -69,7 +69,7 @@
   when:
     - tlog_use_sssd | bool
     - "'sssd' in ansible_facts.packages"
-    - ansible_facts['python_version'] is version('3.7', '>=')
+    - __tlog_python_version is version('3.7', '>=')
   notify: Handler tlog_handler restart sssd
 
 # On managed nodes with python < 3.7, the latest community.general.ini_file
@@ -97,7 +97,7 @@
   when:
     - tlog_use_sssd | bool
     - "'sssd' in ansible_facts.packages"
-    - not (ansible_facts['python_version'] is version('3.7', '>='))
+    - not (__tlog_python_version is version('3.7', '>='))
   notify: Handler tlog_handler restart sssd
 
 # Bare module name (not FQCN): on ansible 2.9 an unresolvable FQCN aborts
@@ -125,7 +125,7 @@
   when:
     - tlog_use_sssd | bool
     - "'sssd' in ansible_facts.packages"
-    - ansible_facts['python_version'] is version('3.7', '>=')
+    - __tlog_python_version is version('3.7', '>=')
   notify: Handler tlog_handler restart sssd
 
 - name: Configure sssd session recording config
