@@ -20,11 +20,12 @@
   when:
     - "'cockpit' in ansible_facts.packages"
 
-# ansible 2.9 (ansible-engine) uses the vendored ini_file_ansible_29 module,
-# since community.general cannot be installed there; other systems use the
-# bare ini_file name, which redirects to the latest community.general.ini_file.
-- name: Configure sssd services section - ansible 2.9
-  ini_file_ansible_29:
+# On managed nodes with python < 3.7, the latest community.general.ini_file
+# fails to import ("from __future__ import annotations" requires python >=
+# 3.7), so use the dependency-free vendored ini_file_python_36 module, which
+# works on every python/ansible combination.
+- name: Configure sssd services section - python 3.6
+  ini_file_python_36:
     path: "{{ __tlog_sssd_conf }}"
     section: sssd
     option: "{{ item.key }}"
@@ -40,15 +41,15 @@
     - key: domains
       value: "nssfiles"
   when:
-    - ansible_version.full is version('2.10', '<')
     - tlog_use_sssd | bool
     - "'sssd' in ansible_facts.packages"
+    - not (ansible_facts['python_version'] is version('3.7', '>='))
   notify: Handler tlog_handler restart sssd
 
-# Bare module name (not FQCN): on ansible 2.9 the collection is not
-# installable and an unresolvable FQCN aborts play parsing even for a task
-# skipped by "when". The bare name resolves to the ansible 2.9 builtin
-# (skipped here) and redirects to the latest collection module elsewhere.
+# Bare module name (not FQCN): on ansible 2.9 an unresolvable FQCN aborts
+# play parsing even for a task skipped by "when". The bare name resolves to
+# the ansible 2.9 builtin and redirects to the latest collection module
+# elsewhere. Used on managed nodes with python >= 3.7.
 - name: Configure sssd services section
   ini_file:  # noqa fqcn
     path: "{{ __tlog_sssd_conf }}"
@@ -66,16 +67,17 @@
     - key: domains
       value: "nssfiles"
   when:
-    - ansible_version.full is version('2.10', '>=')
     - tlog_use_sssd | bool
     - "'sssd' in ansible_facts.packages"
+    - ansible_facts['python_version'] is version('3.7', '>=')
   notify: Handler tlog_handler restart sssd
 
-# ansible 2.9 (ansible-engine) uses the vendored ini_file_ansible_29 module,
-# since community.general cannot be installed there; other systems use the
-# bare ini_file name, which redirects to the latest community.general.ini_file.
-- name: Configure sssd proxy provider domain - ansible 2.9
-  ini_file_ansible_29:
+# On managed nodes with python < 3.7, the latest community.general.ini_file
+# fails to import ("from __future__ import annotations" requires python >=
+# 3.7), so use the dependency-free vendored ini_file_python_36 module, which
+# works on every python/ansible combination.
+- name: Configure sssd proxy provider domain - python 3.6
+  ini_file_python_36:
     path: "{{ __tlog_sssd_conf }}"
     section: domain/nssfiles
     option: "{{ item.key }}"
@@ -93,15 +95,15 @@
     - key: proxy_pam_target
       value: sssd-shadowutils
   when:
-    - ansible_version.full is version('2.10', '<')
     - tlog_use_sssd | bool
     - "'sssd' in ansible_facts.packages"
+    - not (ansible_facts['python_version'] is version('3.7', '>='))
   notify: Handler tlog_handler restart sssd
 
-# Bare module name (not FQCN): on ansible 2.9 the collection is not
-# installable and an unresolvable FQCN aborts play parsing even for a task
-# skipped by "when". The bare name resolves to the ansible 2.9 builtin
-# (skipped here) and redirects to the latest collection module elsewhere.
+# Bare module name (not FQCN): on ansible 2.9 an unresolvable FQCN aborts
+# play parsing even for a task skipped by "when". The bare name resolves to
+# the ansible 2.9 builtin and redirects to the latest collection module
+# elsewhere. Used on managed nodes with python >= 3.7.
 - name: Configure sssd proxy provider domain
   ini_file:  # noqa fqcn
     path: "{{ __tlog_sssd_conf }}"
@@ -121,9 +123,9 @@
     - key: proxy_pam_target
       value: sssd-shadowutils
   when:
-    - ansible_version.full is version('2.10', '>=')
     - tlog_use_sssd | bool
     - "'sssd' in ansible_facts.packages"
+    - ansible_facts['python_version'] is version('3.7', '>=')
   notify: Handler tlog_handler restart sssd
 
 - name: Configure sssd session recording config

@@ -19,7 +19,7 @@ __metaclass__ = type
 
 
 DOCUMENTATION = r"""
-module: ini_file_ansible_29
+module: ini_file_python_36
 short_description: Tweak settings in INI files
 description:
   - Manage (add, remove, change) individual settings in an INI-style file without having to manage the file as a whole with,
@@ -154,7 +154,7 @@ extends_documentation_fragment:
 
 EXAMPLES = r"""
 - name: Ensure "fav=lemonade is in section "[drinks]" in specified file
-  ini_file_ansible_29:
+  ini_file_python_36:
     path: /etc/conf
     section: drinks
     option: fav
@@ -163,7 +163,7 @@ EXAMPLES = r"""
     backup: true
 
 - name: Ensure "temperature=cold is in section "[drinks]" in specified file
-  ini_file_ansible_29:
+  ini_file_python_36:
     path: /etc/anotherconf
     section: drinks
     option: temperature
@@ -171,7 +171,7 @@ EXAMPLES = r"""
     backup: true
 
 - name: Add "beverage=lemon juice" is in section "[drinks]" in specified file
-  ini_file_ansible_29:
+  ini_file_python_36:
     path: /etc/conf
     section: drinks
     option: beverage
@@ -181,7 +181,7 @@ EXAMPLES = r"""
     exclusive: false
 
 - name: Ensure multiple values "beverage=coke" and "beverage=pepsi" are in section "[drinks]" in specified file
-  ini_file_ansible_29:
+  ini_file_python_36:
     path: /etc/conf
     section: drinks
     option: beverage
@@ -192,7 +192,7 @@ EXAMPLES = r"""
     state: present
 
 - name: Add "beverage=lemon juice" outside a section in specified file
-  ini_file_ansible_29:
+  ini_file_python_36:
     path: /etc/conf
     option: beverage
     value: lemon juice
