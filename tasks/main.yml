@@ -20,8 +20,11 @@
   when:
     - "'cockpit' in ansible_facts.packages"
 
-- name: Configure sssd services section
-  community.general.ini_file:
+# ansible 2.9 (ansible-engine) uses the vendored ini_file_ansible_29 module,
+# since community.general cannot be installed there; other systems use the
+# bare ini_file name, which redirects to the latest community.general.ini_file.
+- name: Configure sssd services section - ansible 2.9
+  ini_file_ansible_29:
     path: "{{ __tlog_sssd_conf }}"
     section: sssd
     option: "{{ item.key }}"
@@ -37,12 +40,42 @@
     - key: domains
       value: "nssfiles"
   when:
+    - ansible_version.full is version('2.10', '<')
     - tlog_use_sssd | bool
     - "'sssd' in ansible_facts.packages"
   notify: Handler tlog_handler restart sssd
 
-- name: Configure sssd proxy provider domain
-  community.general.ini_file:
+# Bare module name (not FQCN): on ansible 2.9 the collection is not
+# installable and an unresolvable FQCN aborts play parsing even for a task
+# skipped by "when". The bare name resolves to the ansible 2.9 builtin
+# (skipped here) and redirects to the latest collection module elsewhere.
+- name: Configure sssd services section
+  ini_file:  # noqa fqcn
+    path: "{{ __tlog_sssd_conf }}"
+    section: sssd
+    option: "{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
+    create: true
+    owner: root
+    group: root
+    mode: "0600"
+  loop:
+    - key: services
+      value: "nss, pam"
+    - key: domains
+      value: "nssfiles"
+  when:
+    - ansible_version.full is version('2.10', '>=')
+    - tlog_use_sssd | bool
+    - "'sssd' in ansible_facts.packages"
+  notify: Handler tlog_handler restart sssd
+
+# ansible 2.9 (ansible-engine) uses the vendored ini_file_ansible_29 module,
+# since community.general cannot be installed there; other systems use the
+# bare ini_file name, which redirects to the latest community.general.ini_file.
+- name: Configure sssd proxy provider domain - ansible 2.9
+  ini_file_ansible_29:
     path: "{{ __tlog_sssd_conf }}"
     section: domain/nssfiles
     option: "{{ item.key }}"
@@ -60,6 +93,35 @@
     - key: proxy_pam_target
       value: sssd-shadowutils
   when:
+    - ansible_version.full is version('2.10', '<')
+    - tlog_use_sssd | bool
+    - "'sssd' in ansible_facts.packages"
+  notify: Handler tlog_handler restart sssd
+
+# Bare module name (not FQCN): on ansible 2.9 the collection is not
+# installable and an unresolvable FQCN aborts play parsing even for a task
+# skipped by "when". The bare name resolves to the ansible 2.9 builtin
+# (skipped here) and redirects to the latest collection module elsewhere.
+- name: Configure sssd proxy provider domain
+  ini_file:  # noqa fqcn
+    path: "{{ __tlog_sssd_conf }}"
+    section: domain/nssfiles
+    option: "{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
+    create: true
+    owner: root
+    group: root
+    mode: "0600"
+  loop:
+    - key: id_provider
+      value: proxy
+    - key: proxy_lib_name
+      value: files
+    - key: proxy_pam_target
+      value: sssd-shadowutils
+  when:
+    - ansible_version.full is version('2.10', '>=')
     - tlog_use_sssd | bool
     - "'sssd' in ansible_facts.packages"
   notify: Handler tlog_handler restart sssd
