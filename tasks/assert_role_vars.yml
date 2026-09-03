@@ -1,0 +1,24 @@
+# SPDX-License-Identifier: MIT
+---
+- name: Assert users or groups are specified when scope is some
+  ansible.builtin.assert:
+    that:
+      - >-
+        (tlog_users_sssd | length > 0)
+        or (tlog_groups_sssd | length > 0)
+    fail_msg: >-
+      tlog_scope_sssd is 'some' but neither tlog_users_sssd nor
+      tlog_groups_sssd contains any entries - no sessions will be
+      recorded
+  when: tlog_scope_sssd == 'some'
+
+- name: Assert exclude lists are not set when scope is not all
+  ansible.builtin.assert:
+    that:
+      - tlog_exclude_users_sssd | length == 0
+      - tlog_exclude_groups_sssd | length == 0
+    fail_msg: >-
+      tlog_exclude_users_sssd and tlog_exclude_groups_sssd are only
+      applicable when tlog_scope_sssd is 'all', got
+      tlog_scope_sssd='{{ tlog_scope_sssd }}'
+  when: tlog_scope_sssd != 'all'

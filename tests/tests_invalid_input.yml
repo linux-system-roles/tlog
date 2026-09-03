@@ -1,0 +1,133 @@
+# SPDX-License-Identifier: MIT
+---
+- name: Verify invalid parameters are rejected
+  hosts: all
+  tasks:
+    - name: Run invalid input tests
+      block:
+        # ====================================================
+        # Section 1: Verify role works with valid defaults
+        # ====================================================
+        - name: Run role with valid defaults
+          ansible.builtin.include_tasks: tasks/run_role_with_clear_facts.yml
+
+        # ====================================================
+        # Section 2: argument_specs validation (Ansible 2.11+)
+        # ====================================================
+        - name: Run argument specs validation tests
+          when: ansible_version.full is version('2.11', '>=')
+          block:
+            - name: Argument specs reject non-boolean tlog_use_sssd
+              block:
+                - name: Run role with non-boolean tlog_use_sssd
+                  ansible.builtin.include_tasks: tasks/run_role_with_clear_facts.yml
+                  vars:
+                    tlog_use_sssd: not_a_bool
+              rescue:
+                - name: Mark invalid tlog_use_sssd type rejected
+                  ansible.builtin.set_fact:
+                    __invalid_input_use_sssd_type_failed: true
+
+            - name: Assert invalid tlog_use_sssd type was rejected
+              ansible.builtin.assert:
+                that:
+                  - __invalid_input_use_sssd_type_failed | default(false)
+                fail_msg: >-
+                  argument_specs should reject tlog_use_sssd when given
+                  a non-boolean value
+
+            - name: Argument specs reject invalid tlog_scope_sssd choice
+              block:
+                - name: Run role with invalid tlog_scope_sssd value
+                  ansible.builtin.include_tasks: tasks/run_role_with_clear_facts.yml
+                  vars:
+                    tlog_scope_sssd: invalid_scope
+              rescue:
+                - name: Mark invalid tlog_scope_sssd choice rejected
+                  ansible.builtin.set_fact:
+                    __invalid_input_scope_sssd_choice_failed: true
+
+            - name: Assert invalid tlog_scope_sssd choice was rejected
+              ansible.builtin.assert:
+                that:
+                  - __invalid_input_scope_sssd_choice_failed | default(false)
+                fail_msg: >-
+                  argument_specs should reject tlog_scope_sssd value
+                  'invalid_scope'
+
+            - name: Argument specs reject non-list tlog_users_sssd
+              block:
+                - name: Run role with non-list tlog_users_sssd
+                  ansible.builtin.include_tasks: tasks/run_role_with_clear_facts.yml
+                  vars:
+                    tlog_users_sssd: 123
+              rescue:
+                - name: Mark invalid tlog_users_sssd type rejected
+                  ansible.builtin.set_fact:
+                    __invalid_input_users_sssd_type_failed: true
+
+            - name: Assert invalid tlog_users_sssd type was rejected
+              ansible.builtin.assert:
+                that:
+                  - __invalid_input_users_sssd_type_failed | default(false)
+                fail_msg: >-
+                  argument_specs should reject tlog_users_sssd when given
+                  a non-list value
+
+        # ====================================================
+        # Section 3: assert_role_vars validation (all versions)
+        # ====================================================
+
+        - name: Assert rejects scope some with no users or groups
+          block:
+            - name: Run role with scope some and empty user/group lists
+              ansible.builtin.include_tasks: tasks/run_role_with_clear_facts.yml
+              vars:
+                tlog_scope_sssd: some
+                tlog_users_sssd: []
+                tlog_groups_sssd: []
+          rescue:
+            - name: Mark scope some without users/groups rejected
+              ansible.builtin.set_fact:
+                __invalid_input_scope_some_empty_failed: true
+
+        - name: Assert scope some with no users/groups was rejected
+          ansible.builtin.assert:
+            that:
+              - __invalid_input_scope_some_empty_failed | default(false)
+            fail_msg: >-
+              assert_role_vars should reject tlog_scope_sssd 'some' when
+              neither tlog_users_sssd nor tlog_groups_sssd is specified
+
+        - name: Assert rejects exclude lists when scope is not all
+          block:
+            - name: Run role with exclude users and scope some
+              ansible.builtin.include_tasks: tasks/run_role_with_clear_facts.yml
+              vars:
+                tlog_scope_sssd: some
+                tlog_users_sssd:
+                  - testuser
+                tlog_exclude_users_sssd:
+                  - otheruser
+          rescue:
+            - name: Mark exclude with wrong scope rejected
+              ansible.builtin.set_fact:
+                __invalid_input_exclude_wrong_scope_failed: true
+
+        - name: Assert exclude lists with wrong scope was rejected
+          ansible.builtin.assert:
+            that:
+              - __invalid_input_exclude_wrong_scope_failed | default(false)
+            fail_msg: >-
+              assert_role_vars should reject tlog_exclude_users_sssd
+              when tlog_scope_sssd is not 'all'
+
+      always:
+        - name: Clear test facts
+          ansible.builtin.set_fact:
+            __invalid_input_use_sssd_type_failed:
+            __invalid_input_scope_sssd_choice_failed:
+            __invalid_input_users_sssd_type_failed:
+            __invalid_input_scope_some_empty_failed:
+            __invalid_input_exclude_wrong_scope_failed:
+          tags: tests::cleanup
