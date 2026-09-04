@@ -1,0 +1,44 @@
+---
+# Shared helper included from main.yml with include_tasks. The ini_file
+# parameters are passed in as __tlog_ini_file_* variables; loops and any extra
+# "when" conditions are handled by the parent include_tasks task.
+#
+# include_tasks is dynamic: its tasks are only parsed when the include runs, and
+# a task skipped by its "when" (the community.general module on ansible 2.9)
+# never has its FQCN resolved. That is why the community.general FQCN below does
+# not abort play parsing the way it would in a statically parsed main.yml.
+
+# On managed nodes with python < 3.7, the latest community.general.ini_file
+# fails to import ("from __future__ import annotations" requires python >=
+# 3.7), so use the dependency-free vendored ini_file_python_36 module, which
+# works on every python/ansible combination.
+- name: Set ini_file setting - python 3.6
+  ini_file_python_36:
+    path: "{{ __tlog_ini_file_path }}"
+    section: "{{ __tlog_ini_file_section }}"
+    option: "{{ __tlog_ini_file_option | default(omit) }}"
+    value: "{{ __tlog_ini_file_value | default(omit) }}"
+    state: "{{ __tlog_ini_file_state | default('present') }}"
+    create: "{{ __tlog_ini_file_create | default(omit) }}"
+    owner: "{{ __tlog_ini_file_owner | default(omit) }}"
+    group: "{{ __tlog_ini_file_group | default(omit) }}"
+    mode: "{{ __tlog_ini_file_mode | default(omit) }}"
+  when:
+    - not (ansible_facts['python_version'] is version('3.7', '>='))
+  notify: Handler tlog_handler restart sssd
+
+# On managed nodes with python >= 3.7, use the latest community.general.ini_file.
+- name: Set ini_file setting
+  community.general.ini_file:
+    path: "{{ __tlog_ini_file_path }}"
+    section: "{{ __tlog_ini_file_section }}"
+    option: "{{ __tlog_ini_file_option | default(omit) }}"
+    value: "{{ __tlog_ini_file_value | default(omit) }}"
+    state: "{{ __tlog_ini_file_state | default('present') }}"
+    create: "{{ __tlog_ini_file_create | default(omit) }}"
+    owner: "{{ __tlog_ini_file_owner | default(omit) }}"
+    group: "{{ __tlog_ini_file_group | default(omit) }}"
+    mode: "{{ __tlog_ini_file_mode | default(omit) }}"
+  when:
+    - ansible_facts['python_version'] is version('3.7', '>=')
+  notify: Handler tlog_handler restart sssd
