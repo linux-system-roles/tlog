@@ -1,5 +1,27 @@
 # SPDX-License-Identifier: MIT
 ---
+- name: Assert list parameters are of type list
+  ansible.builtin.assert:
+    that:
+      - tlog_users_sssd is sequence
+      - tlog_users_sssd is not string
+      - tlog_users_sssd is not mapping
+      - tlog_groups_sssd is sequence
+      - tlog_groups_sssd is not string
+      - tlog_groups_sssd is not mapping
+      - tlog_exclude_users_sssd is sequence
+      - tlog_exclude_users_sssd is not string
+      - tlog_exclude_users_sssd is not mapping
+      - tlog_exclude_groups_sssd is sequence
+      - tlog_exclude_groups_sssd is not string
+      - tlog_exclude_groups_sssd is not mapping
+    fail_msg: >-
+      List parameters must be of type list. Found:
+      tlog_users_sssd={{ tlog_users_sssd | type_debug }},
+      tlog_groups_sssd={{ tlog_groups_sssd | type_debug }},
+      tlog_exclude_users_sssd={{ tlog_exclude_users_sssd | type_debug }},
+      tlog_exclude_groups_sssd={{ tlog_exclude_groups_sssd | type_debug }}
+
 - name: Assert users or groups are specified when scope is some
   ansible.builtin.assert:
     that:

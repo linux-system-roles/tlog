@@ -65,33 +65,57 @@
                   argument_specs should reject tlog_scope_sssd value
                   'invalid_scope'
 
-            - name: Argument specs reject non-list tlog_users_sssd
-              block:
-                - name: Run role with non-list tlog_users_sssd
-                  ansible.builtin.include_tasks: tasks/run_role_with_clear_facts.yml
-                  vars:
-                    tlog_users_sssd: 123
-              rescue:
-                - name: Mark invalid tlog_users_sssd type rejected
-                  ansible.builtin.set_fact:
-                    __invalid_input_users_sssd_type_failed: true
-                  when: >-
-                    'Validation of arguments failed' in
-                    (ansible_failed_result.msg | default(''))
-                    or 'argument_errors' in
-                    (ansible_failed_result | default({}))
-
-            - name: Assert invalid tlog_users_sssd type was rejected
-              ansible.builtin.assert:
-                that:
-                  - __invalid_input_users_sssd_type_failed | default(false)
-                fail_msg: >-
-                  argument_specs should reject tlog_users_sssd when given
-                  a non-list value
-
         # ====================================================
         # Section 3: assert_role_vars validation (all versions)
         # ====================================================
+
+        - name: Assert rejects non-list type for tlog_users_sssd
+          block:
+            - name: Run role with string instead of list for tlog_users_sssd
+              ansible.builtin.include_tasks: tasks/run_role_with_clear_facts.yml
+              vars:
+                tlog_users_sssd: testuser
+          rescue:
+            - name: Mark non-list tlog_users_sssd rejected
+              ansible.builtin.set_fact:
+                __invalid_input_users_sssd_type_failed: true
+              when: >-
+                'List parameters must be of type list' in
+                (ansible_failed_result.msg | default(''))
+                or 'is not string' in
+                (ansible_failed_result.msg | default(''))
+
+        - name: Assert non-list tlog_users_sssd was rejected
+          ansible.builtin.assert:
+            that:
+              - __invalid_input_users_sssd_type_failed | default(false)
+            fail_msg: >-
+              assert_role_vars should reject tlog_users_sssd when given
+              a string instead of a list
+
+        - name: Assert rejects integer type for tlog_groups_sssd
+          block:
+            - name: Run role with integer instead of list for tlog_groups_sssd
+              ansible.builtin.include_tasks: tasks/run_role_with_clear_facts.yml
+              vars:
+                tlog_groups_sssd: 123
+          rescue:
+            - name: Mark integer tlog_groups_sssd rejected
+              ansible.builtin.set_fact:
+                __invalid_input_groups_sssd_int_failed: true
+              when: >-
+                'List parameters must be of type list' in
+                (ansible_failed_result.msg | default(''))
+                or 'is sequence' in
+                (ansible_failed_result.msg | default(''))
+
+        - name: Assert integer tlog_groups_sssd was rejected
+          ansible.builtin.assert:
+            that:
+              - __invalid_input_groups_sssd_int_failed | default(false)
+            fail_msg: >-
+              assert_role_vars should reject tlog_groups_sssd when given
+              an integer instead of a list
 
         - name: Assert rejects scope some with no users or groups
           block:
@@ -153,6 +177,7 @@
             __invalid_input_use_sssd_type_failed:
             __invalid_input_scope_sssd_choice_failed:
             __invalid_input_users_sssd_type_failed:
+            __invalid_input_groups_sssd_int_failed:
             __invalid_input_scope_some_empty_failed:
             __invalid_input_exclude_wrong_scope_failed:
           tags: tests::cleanup
