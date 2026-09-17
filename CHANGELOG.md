@@ -1,6 +1,32 @@
 Changelog
 =========
 
+[1.7.0] - 2026-09-17
+--------------------
+
+### New Features
+
+- feat: Argument spec implementation for tlog role (#242)
+
+### Bug Fixes
+
+- fix: Select ini_file module by managed node python version (#240)
+- fix: Move ini_file calls to a shared include task file (#250)
+
+### Other Changes
+
+- ci: use commit hash for github action, add persist-credentials false [citest_skip] (#237)
+- ci: refactor build_docs so that pandoc runs in isolated read-only job [citest_skip] (#238)
+- ci: use exact match for systemroller instead of contains [citest_skip] (#239)
+- ci(build_docs): fix pandoc container syntax [citest_skip] (#241)
+- ci: [citest_skip] Bump myrotvorets/set-commit-status-action from 2774e1f040c82ed70a76b4b5cd53bb11ffaedd0a to c0f880c99d91381c6fdb97726f03feb8004409b4 (#243)
+- ci: [citest_skip] Bump codespell-project/actions-codespell from 2.1 to 2.2 (#244)
+- ci: [citest_skip] Bump actions/download-artifact from 7.0.0 to 8.0.1 (#245)
+- refactor: Relax collection constraints, gate vendored modules by python version, update ci versions [citest_skip] (#246)
+- ci: do not run ci tests by default, require citest comment or label [citest_skip] (#247)
+- ci: replace weekly_ci with periodic_ci, stagger schedules [citest_skip] (#248)
+- ci: update status when action triggered by issue comment (#249)
+
 [1.6.1] - 2026-08-10
 --------------------
 
