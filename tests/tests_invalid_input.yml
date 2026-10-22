@@ -2,6 +2,13 @@
 ---
 - name: Verify invalid parameters are rejected
   hosts: all
+  vars:
+    __invalid_input_failure_messages: >-
+      {{ ([ansible_failed_result.msg | default('') | string,
+           ansible_failed_result.msg.msg | default('') | string]
+          + (ansible_failed_result.results | default([])
+             | map(attribute='msg') | map('default', '') | list))
+         | join(' ') }}
   tasks:
     - name: Run invalid input tests
       block:
@@ -28,10 +35,9 @@
                   ansible.builtin.set_fact:
                     __invalid_input_use_sssd_type_failed: true
                   when: >-
-                    'Validation of arguments failed' in
-                    (ansible_failed_result.msg | default(''))
-                    or 'argument_errors' in
-                    (ansible_failed_result | default({}))
+                    "argument 'tlog_use_sssd'" in
+                    __invalid_input_failure_messages and
+                    'convert to bool' in __invalid_input_failure_messages
 
             - name: Assert invalid tlog_use_sssd type was rejected
               ansible.builtin.assert:
@@ -52,10 +58,9 @@
                   ansible.builtin.set_fact:
                     __invalid_input_scope_sssd_choice_failed: true
                   when: >-
-                    'Validation of arguments failed' in
-                    (ansible_failed_result.msg | default(''))
-                    or 'argument_errors' in
-                    (ansible_failed_result | default({}))
+                    'value of tlog_scope_sssd must be one of' in
+                    __invalid_input_failure_messages and
+                    'got: invalid_scope' in __invalid_input_failure_messages
 
             - name: Assert invalid tlog_scope_sssd choice was rejected
               ansible.builtin.assert:
@@ -81,9 +86,10 @@
                 __invalid_input_users_sssd_type_failed: true
               when: >-
                 'List parameters must be of type list' in
-                (ansible_failed_result.msg | default(''))
-                or 'is not string' in
-                (ansible_failed_result.msg | default(''))
+                __invalid_input_failure_messages and
+                ('tlog_users_sssd=str' in __invalid_input_failure_messages or
+                 'tlog_users_sssd=AnsibleUnicode'
+                 in __invalid_input_failure_messages)
 
         - name: Assert non-list tlog_users_sssd was rejected
           ansible.builtin.assert:
@@ -105,9 +111,8 @@
                 __invalid_input_groups_sssd_int_failed: true
               when: >-
                 'List parameters must be of type list' in
-                (ansible_failed_result.msg | default(''))
-                or 'is sequence' in
-                (ansible_failed_result.msg | default(''))
+                __invalid_input_failure_messages and
+                'tlog_groups_sssd=int' in __invalid_input_failure_messages
 
         - name: Assert integer tlog_groups_sssd was rejected
           ansible.builtin.assert:
@@ -130,10 +135,10 @@
               ansible.builtin.set_fact:
                 __invalid_input_scope_some_empty_failed: true
               when: >-
-                'no sessions will be recorded' in
-                (ansible_failed_result.msg | default(''))
-                or 'tlog_scope_sssd is' in
-                (ansible_failed_result.msg | default(''))
+                "tlog_scope_sssd is 'some' but neither tlog_users_sssd nor"
+                in __invalid_input_failure_messages and
+                'no sessions will be recorded'
+                in __invalid_input_failure_messages
 
         - name: Assert scope some with no users/groups was rejected
           ansible.builtin.assert:
@@ -158,10 +163,9 @@
               ansible.builtin.set_fact:
                 __invalid_input_exclude_wrong_scope_failed: true
               when: >-
-                'only applicable when tlog_scope_sssd is' in
-                (ansible_failed_result.msg | default(''))
-                or 'tlog_exclude_users_sssd and tlog_exclude_groups_sssd' in
-                (ansible_failed_result.msg | default(''))
+                'tlog_exclude_users_sssd and tlog_exclude_groups_sssd are only'
+                in __invalid_input_failure_messages and
+                "tlog_scope_sssd='some'" in __invalid_input_failure_messages
 
         - name: Assert exclude lists with wrong scope was rejected
           ansible.builtin.assert:
